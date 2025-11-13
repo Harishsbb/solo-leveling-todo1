@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-function TaskInput({ addTask }) {
+export default function TaskInput({ onAddTask }) {
   const [text, setText] = useState("");
 
   const handleAdd = () => {
-    addTask(text);
+    onAddTask(text);
     setText("");
   };
 
@@ -12,13 +12,11 @@ function TaskInput({ addTask }) {
     <div className="task-input">
       <input
         type="text"
+        placeholder="Enter your next quest..."
         value={text}
-        placeholder="Enter a new quest..."
         onChange={(e) => setText(e.target.value)}
       />
       <button onClick={handleAdd}>Add Quest</button>
     </div>
   );
 }
-
-export default TaskInput;
