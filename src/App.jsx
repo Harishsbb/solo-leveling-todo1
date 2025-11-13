@@ -43,31 +43,41 @@ export default function App() {
     tasks.length === 0 ? 0 : Math.round((completedCount / tasks.length) * 100);
 
   return (
-    <div className="app-container">
-      <h1>⚔️ Hunter’s Quest Log</h1>
+    <div className="app-wrapper">
 
-      <div className="xp-bar">
-        <div className="xp-fill" style={{ width: `${progress}%` }}></div>
-        <span className="xp-text">{progress}% XP</span>
+      {/* 🔥 Background Video (OUTSIDE UI BOX) */}
+      <video className="bg-video" autoPlay loop muted playsInline>
+        <source src="/Shadow-Monarch.mp4" type="video/mp4" />
+      </video>
+
+      {/* 🔥 UI CARD */}
+      <div className="app-container">
+        <h1>⚔️ Hunter’s Quest Log</h1>
+
+        <div className="xp-bar">
+          <div className="xp-fill" style={{ width: `${progress}%` }}></div>
+          <span className="xp-text">{progress}% XP</span>
+        </div>
+
+        <TaskInput onAddTask={addTask} />
+        <FilterBar filter={filter} setFilter={setFilter} />
+
+        <div className="task-list">
+          {filteredTasks.length === 0 ? (
+            <p className="empty">No quests found...</p>
+          ) : (
+            filteredTasks.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}
+                onDelete={deleteTask}
+                onToggle={toggleComplete}
+              />
+            ))
+          )}
+        </div>
       </div>
 
-      <TaskInput onAddTask={addTask} />
-      <FilterBar filter={filter} setFilter={setFilter} />
-
-      <div className="task-list">
-        {filteredTasks.length === 0 ? (
-          <p className="empty">No quests found...</p>
-        ) : (
-          filteredTasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              onDelete={deleteTask}
-              onToggle={toggleComplete}
-            />
-          ))
-        )}
-      </div>
     </div>
   );
 }
